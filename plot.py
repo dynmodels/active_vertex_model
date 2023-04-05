@@ -26,7 +26,7 @@ options:
 
 
 def plot_network(vertices, polys, L, file):
-	plt.cla()
+	#plt.cla()
 	fig = plt.figure()
 	ax = fig.add_subplot(1,1,1)
 	for x,y in vertices:
@@ -63,8 +63,10 @@ def plot_network(vertices, polys, L, file):
 
 	ax.axis([0,L[0],0,L[1]])
 	plt.savefig(file)
+	plt.show(block=False)
+	plt.pause(1)
 	plt.close(fig)
-	return
+	return fig
 
 def plot_edges(vertices, edges, L):
 	plt.cla()
