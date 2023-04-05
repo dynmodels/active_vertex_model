@@ -1,4 +1,15 @@
 #!/usr/bin/python
+# +
+import sys
+import os
+
+print(sys.path)
+# -
+
+sys.path.append(os.getcwd())
+sys.path.insert(0,os.getcwd())
+print(sys.path)
+
 import numpy as np
 from energy import get_energy
 from force import get_forces, move_vertices
@@ -28,7 +39,7 @@ def molecular_dynamics(vertices, edges, polys, parameters, T, folder):
 		
 		# get forces for network
 		forces = get_forces(vertices, polys, edges, parameters)
-		print t, np.sum(forces**2)**(0.5)
+		print("t =",t, "F =",np.sum(forces**2)**(0.5))
 
 		# move vertices
 		vertices = move_vertices(vertices, forces, parameters)
@@ -49,7 +60,7 @@ def molecular_dynamics(vertices, edges, polys, parameters, T, folder):
 
 	return
 
-
+sys.argv = [0, "./data/network_vertices.txt", "./data/edges.txt", "./data/cell_indices.txt", "./test/", 0.1]
 
 # command line arguments for data files
 vertex_file = sys.argv[1]
@@ -59,12 +70,17 @@ folder = sys.argv[4]
 eta = float(sys.argv[5])
 
 
+# +
 # Parameters
-# lx = 9 * (2 / (3 * (3**0.5)))**0.5
-# ly = 4 * (2 / (3**0.5))**0.5
-L = np.loadtxt("%s/L" % "data")
-lx = L[0]
-ly = L[1]
+lx = 9 * (2 / (3 * (3**0.5)))**0.5
+ly = 4 * (2 / (3**0.5))**0.5
+L = np.array([lx,ly])
+
+print(L)
+#L = np.loadtxt("%s/L" % "data")
+#lx = L[0]
+#ly = L[1]
+# -
 
 
 ka = 1.
@@ -93,5 +109,13 @@ edges = read_edges(edge_file)
 # get polygons
 poly_indices = read_poly_indices(poly_file)
 polys = build_polygons(poly_indices, A0)
+
+# +
+a=polys[1]
+
+print(a.get_area(vertices,np.array([lx,ly])) )
+print(a.get_perim(vertices,np.array([lx,ly])) )
+print(a.get_center(vertices,np.array([lx,ly])) )
+# -
 
 molecular_dynamics(vertices, edges, polys, parameters, T, folder)
