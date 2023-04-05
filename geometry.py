@@ -62,7 +62,7 @@ def perimeter(vertices):
 # Euclidean distance between (x,y) coordinates
 def euclidean_distance(x0, y0, x1, y1):
 	return sqrt((x0 - x1)**2 + (y0 - y1)**2)
-	
+
 
 # Difference with respect to periodic boundaries
 def periodic_diff(v1, v2, L):
@@ -125,7 +125,7 @@ def get_angle_points(p1,p2,p3):
 		try:
 			radian = acos( (p12**2 + p13**2 - p23**2)/(2*p12*p13) )
 		except ValueError:
-			print "Domain Error"
+			print("Domain Error")
 			pass
 	return radian
 
@@ -158,3 +158,5 @@ def check_counter_clockwise(polygon):
 		return True
 	else:
 		return False
+
+
