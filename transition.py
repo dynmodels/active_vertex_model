@@ -108,7 +108,7 @@ def T1_0(polys, i1, i2, poly_ids, indices):
 	i5 = indices[4]
 	i6 = indices[5]
 
-	edges_0 = np.zeros((10,2))
+	edges_0 = np.zeros((10,2)).astype(int)
 	# Edge 0: i1 - i2
 	edges_0[0,0] = i1
 	edges_0[0,1] = i2
@@ -185,7 +185,7 @@ def T1_left(polys, i1, i2, poly_ids, indices):
 	pos = int(np.where(poly_1.indices == i1)[0])
 	left_indices = poly_1.indices[:pos]
 	right_indices = poly_1.indices[pos:]
-	indices = np.concatenate((left_indices, [i2], right_indices))
+	indices = np.concatenate((left_indices, [i2], right_indices)).astype(int)
 	polys_l[1].indices = indices
 
 	# Cell 2: remove i1
@@ -197,12 +197,12 @@ def T1_left(polys, i1, i2, poly_ids, indices):
 	pos = int(np.where(poly_3.indices == i2)[0])
 	left_indices = poly_3.indices[:pos]
 	right_indices = poly_3.indices[pos:]
-	indices = np.concatenate((left_indices, [i1], right_indices))
+	indices = np.concatenate((left_indices, [i1], right_indices)).astype(int)
 	polys_l[3].indices = indices
 
 
 	# Edges
-	edges_l = np.zeros((10,2))
+	edges_l = np.zeros((10,2)).astype(int)
 	# Edge 0: i1 - i2
 	edges_l[0,0] = i1
 	edges_l[0,1] = i2
@@ -277,7 +277,7 @@ def T1_right(polys, i1, i2, poly_ids, indices):
 	pos = int(np.where(poly_1.indices == i1)[0])
 	left_indices = poly_1.indices[:pos+1]
 	right_indices = poly_1.indices[pos+1:]
-	indices = np.concatenate((left_indices, [i2], right_indices))
+	indices = np.concatenate((left_indices, [i2], right_indices)).astype(int)
 	polys_r[1].indices = indices
 
 	# Cell 2: remove i2
@@ -289,11 +289,11 @@ def T1_right(polys, i1, i2, poly_ids, indices):
 	pos = int(np.where(poly_3.indices == i2)[0])
 	left_indices = poly_3.indices[:pos+1]
 	right_indices = poly_3.indices[pos+1:]
-	indices = np.concatenate((left_indices, [i1], right_indices))
+	indices = np.concatenate((left_indices, [i1], right_indices)).astype(int)
 	polys_r[3].indices = indices 
 
 	# # Edges
-	edges_r = np.zeros((10,2))
+	edges_r = np.zeros((10,2)).astype(int)
 	# Edge 0: i1 - i2
 	edges_r[0,0] = i1
 	edges_r[0,1] = i2
@@ -374,7 +374,7 @@ def get_4_polys(polys, i1, i2):
 			poly_ids[1] = poly.id
 
 	return poly_ids
-	
+
 
 
 def T1_transition(vertices, polys, edges, parameters):
@@ -398,7 +398,7 @@ def T1_transition(vertices, polys, edges, parameters):
 		dist = euclidean_distance(v1[0], v1[1], v2[0], v2[1])
 
 		if dist < lmin and (i1,i2) not in reverse:
-			print "T1", i1, i2, dist
+			print("T1", i1, i2, dist)
 			poly_ids = get_4_polys(polys, i1, i2)
 			if -1 in poly_ids:
 				pass
@@ -425,7 +425,7 @@ def T1_transition(vertices, polys, edges, parameters):
 				# get minimum
 				min_energy = np.min((E0, E_left, E_right))
 				min_i = np.argmin((E0, E_left, E_right))
-				print min_i
+				print(min_i)
 
 				# # do nothing - same configuration
 				if min_i == 0:
